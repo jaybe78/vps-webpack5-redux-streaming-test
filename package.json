@@ -2,9 +2,9 @@
   "scripts": {
     "dev": "npm run server",
     "prod": "npm run build && npm run server:prod",
-    "build": "vite build",
+    "build": "vite build && webpack",
     "server": "node ./server",
-    "server:prod": "cross-env NODE_ENV=production node ./server"
+    "server:prod": "cross-env NODE_ENV=production node ./dist/main"
   },
   "type": "module",
   "dependencies": {
