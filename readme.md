@@ -18,3 +18,5 @@ Error: Cannot find module 'stream'
     at async executeRenderHook (file:///home/romuuu/tmp/some_error/dist/main.js:44013:20)
     at async renderPage_ (file:///home/romuuu/tmp/some_error/dist/main.js:43620:30)
 ```
+
+Fixed at the `fix` branch of this repo.
