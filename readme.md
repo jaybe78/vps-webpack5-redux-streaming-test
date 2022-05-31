@@ -1,5 +1,5 @@
 
-1) Html not updated when fetching data 
+## Html not updated when fetching data 
 Problem: I have a component `Movies` which fetches some data, but the it seems the stream does not get injected as the html is not update.
 Note: Wrapping up a component fetching data with Lazy has solved the problem.(`Weather`)
 
@@ -95,7 +95,7 @@ async function render(pageContext) {
 ```
 
 
-2) What's the proper way of updating `redux` store
+## What's the proper way of updating `redux` store
 
 I managed to do it but not sure it's the right way to do so
 
