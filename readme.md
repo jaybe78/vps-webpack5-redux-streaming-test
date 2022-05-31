@@ -1,10 +1,11 @@
 
-1) Html not updated when fetching data 
-Problem: I have a component `Movies` which fetches some data, but the it seems the stream does not get injected as the html is not update.
-Note: Wrapping up a component fetching data with Lazy has solved the problem.(`Weather`)
+## Html not updated when fetching data (useAsync())
+Problem: I have a component `<Movies />` which fetches some data, but  it seems the stream does not get injected as the html is not updated.
+
+Note: Wrapping up a component fetching data with `React Lazy` has solved the problem. (`Weather`)
 
 
-index.page.jsx
+- index.page.jsx
 ```
 const Lazy = React.lazy(() => import('../../components/Weather'))
 
@@ -26,7 +27,7 @@ function Page() {
 }
 ```
 
-Movies.jsx
+- Movies.jsx
 ```
 import { useAsync } from "react-streaming";
 
@@ -51,7 +52,7 @@ export default function MovieList() {
 }
 ```
 
-_default.page.client.jsx
+- _default.page.client.jsx
 
 ```
 export { render };
@@ -70,7 +71,7 @@ async function render(pageContext) {
 }
 ```
 
-_default.page.server.jsx
+- _default.page.server.jsx
 ```
 async function render(pageContext) {
   const { Page, pageProps } = pageContext;
@@ -95,14 +96,14 @@ async function render(pageContext) {
 ```
 
 
-2) What's the proper way of updating `redux` store
-
-I managed to do it but not sure it's the right way to do so
+## What's the proper way of updating `redux` store ?
 
 If we look at `_default.page.server.jsx`, I fetch some data and then dispatch the result to update the state.
 
-What I've noticed is that, in the `render` function, `store.getState()` has not been updated yet so I have to pass the return the new store from `onBeforeRender`.
+What I've noticed is that, after dispatching the action, in the `render` function, `store.getState()` has not been updated yet... so the only "solution" I have found is to return the updated store from `onBeforeRender`.
 
+
+- _default.page.server.jsx
 ```
 async function onBeforeRender(pageContext) {
   const store = getStore(pageContext.PRELOADED_STATE);
