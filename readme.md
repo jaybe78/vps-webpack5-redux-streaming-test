@@ -1,5 +1,5 @@
 
-## Html not updated when fetching data 
+## Html not updated when fetching data (useAsync())
 Problem: I have a component `Movies` which fetches some data, but the it seems the stream does not get injected as the html is not update.
 Note: Wrapping up a component fetching data with Lazy has solved the problem.(`Weather`)
 
