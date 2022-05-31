@@ -1,22 +1,124 @@
-```bash
-pnpm install
-pnpm run prod
+
+1) Html not updated when fetching data 
+Problem: I have a component `Movies` which fetches some data, but the it seems the stream does not get injected as the html is not update.
+Note: Wrapping up a component fetching data with Lazy has solved the problem.(`Weather`)
+
+
+index.page.jsx
+```
+const Lazy = React.lazy(() => import('../../components/Weather'))
+
+function Page() {
+    const count = useSelector((state) => state.value)
+  return (
+    <>
+      {/* successfully injected into the html */}
+      <React.Suspense fallback={<p>Loading weather...</p>}>
+          <Lazy />
+      </React.Suspense>
+     ...
+       {/* this is not getting injected into the html */}
+       <React.Suspense fallback={<p>Loading movies...</p>}>
+        <MovieList />
+      </React.Suspense>
+    </>
+  )
+}
 ```
 
-Then go to http://localhost:3000.
+Movies.jsx
+```
+import { useAsync } from "react-streaming";
+
+export default function MovieList() {
+  const movies = useAsync(async () => {
+    const response = await fetch('https://star-wars.brillout.com/api/films.json')
+    return response.json()
+  })
+  return (
+    <ul>
+      {movies.results.forEach((movie) => {
+          console.log(movie.director)
+          return (
+              <li>
+                  {movie.director}
+              </li>
+          )
+
+      })}
+    </ul>
+  )
+}
+```
+
+_default.page.client.jsx
 
 ```
-Error: Cannot find module 'stream'
-    at webpackEmptyContext (file:///home/romuuu/tmp/some_error/dist/main.js:34251:10)
-    at loadModule (file:///home/romuuu/tmp/some_error/dist/main.js:34206:27)
-    at loadStreamModule (file:///home/romuuu/tmp/some_error/dist/main.js:34195:12)
-    at loadNodeStreamModule (file:///home/romuuu/tmp/some_error/dist/main.js:34179:32)
-    at createPipeWrapper (file:///home/romuuu/tmp/some_error/dist/main.js:34049:80)
-    at renderToNodeStream (file:///home/romuuu/tmp/some_error/dist/main.js:33861:104)
-    at async Object.renderToStream (file:///home/romuuu/tmp/some_error/dist/main.js:33808:18)
-    at async render (file:///home/romuuu/tmp/some_error/dist/main.js:47452:18)
-    at async executeRenderHook (file:///home/romuuu/tmp/some_error/dist/main.js:44013:20)
-    at async renderPage_ (file:///home/romuuu/tmp/some_error/dist/main.js:43620:30)
+export { render };
+async function render(pageContext) {
+  const { Page, pageProps } = pageContext;
+  const store = getStore(pageContext.PRELOADED_STATE)
+  hydrateRoot(
+    document.getElementById("page-view"),
+      <ReactStreaming>
+       <Provider store={store}>
+        <PageLayout>
+         <Page {...pageProps} />
+        </PageLayout></Provider>
+    </ReactStreaming>
+  );
+}
 ```
 
-Fixed at the `fix` branch of this repo.
+_default.page.server.jsx
+```
+async function render(pageContext) {
+  const { Page, pageProps } = pageContext;
+  const stream = await renderToStream(
+      <Provider store={pageContext.store}>
+    <PageLayout>
+      <Page {...pageProps} />
+    </PageLayout></Provider>,
+    {
+      disable: false,
+      webStream: false,
+    }
+  );
+
+  return escapeInject`<!DOCTYPE html>
+    <html>
+      <body>
+        <div id="page-view">${stream}</div>
+      </body>
+    </html>`;
+}
+```
+
+
+2) What's the proper way of updating `redux` store
+
+I managed to do it but not sure it's the right way to do so
+
+If we look at `_default.page.server.jsx`, I fetch some data and then dispatch the result to update the state.
+
+What I've noticed is that, in the `render` function, `store.getState()` has not been updated yet so I have to pass the return the new store from `onBeforeRender`.
+
+```
+async function onBeforeRender(pageContext) {
+  const store = getStore(pageContext.PRELOADED_STATE);
+  const list = await fetch('https://xeno-canto.org/api/2/recordings?query=cnt:brazil')
+  const result = await list.json()
+
+  store.dispatch({ type: 'update_count', payload: result.numPages })
+
+  // Grab the initial state from our Redux store
+  const PRELOADED_STATE = store.getState()
+  console.log(PRELOADED_STATE)
+  return {
+    pageContext: {
+      PRELOADED_STATE,
+      store,
+    },
+  }
+}
+```
