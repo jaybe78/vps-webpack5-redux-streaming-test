@@ -1,3 +1,4 @@
+import "isomorphic-fetch";
 import React from "react";
 import { escapeInject } from "vite-plugin-ssr";
 import { PageLayout } from "./PageLayout";
@@ -7,18 +8,21 @@ import { getStore } from "./store";
 import { Provider } from "react-redux";
 import { PageContext } from "./types";
 import { updateCount } from "../features/counter/counterSlice";
+import { authenticateUser } from "../features/user/userSlice";
 
 export { passToClient };
 export { onBeforeRender };
 
 // See https://vite-plugin-ssr.com/data-fetching
-const passToClient = ["pageProps", "PRELOADED_STATE"];
+const passToClient = ["pageProps", "initialStoreState"];
 
-async function render(pageContext) {
+async function render(pageContext: PageContext) {
   const { Page, pageProps } = pageContext;
+  const store = getStore(pageContext.initialStoreState);
+
   const stream = await renderToStream(
-    <Provider store={pageContext.store}>
-      <PageLayout>
+    <Provider store={store}>
+      <PageLayout pageContext={pageContext}>
         <Page {...pageProps} />
       </PageLayout>
     </Provider>,
@@ -37,21 +41,25 @@ async function render(pageContext) {
 }
 
 async function onBeforeRender(pageContext: PageContext) {
-  const store = getStore(pageContext.PRELOADED_STATE);
+  const store = getStore(pageContext.initialStoreState);
   const list = await fetch(
     "https://xeno-canto.org/api/2/recordings?query=cnt:brazil"
   );
   const result = await list.json();
-  console.log(result);
   store.dispatch(updateCount(result.numPages));
+  await store.dispatch(authenticateUser());
 
   // Grab the initial state from our Redux store
-  const PRELOADED_STATE = store.getState();
-  console.log(PRELOADED_STATE);
+  const initialStoreState = store.getState();
   return {
     pageContext: {
-      PRELOADED_STATE,
-      store,
+      initialStoreState,
+      user: "toto",
+      pageProps: {
+        toto: "bb",
+        user: "toto",
+        loggedIn: true,
+      },
     },
   };
 }

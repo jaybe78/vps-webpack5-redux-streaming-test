@@ -17,8 +17,7 @@ export default function MovieList() {
   });
   return (
     <ul>
-      {movies.results.map((movie, id) => {
-        console.log(movie.director);
+      {movies.results.map((movie, id: number) => {
         return (
           <li key={`movies${id}`}>
             <Title>{movie.director}</Title>

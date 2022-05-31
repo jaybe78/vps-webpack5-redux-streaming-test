@@ -1,27 +1,42 @@
 import React from "react";
 import "./PageLayout.css";
+import { PageContextProvider } from "./usePageContext";
+import { PageContext } from "./types";
+
+export type LayoutProps = {
+  children: JSX.Element;
+};
 
 export { PageLayout };
 
-function PageLayout({ children }) {
+function PageLayout({
+  pageContext,
+  children,
+}: LayoutProps & { pageContext: PageContext }) {
   return (
     <React.StrictMode>
-      <Layout>
-        <Sidebar>
-          <a className="navitem" href="/">
-            Home
-          </a>
-          <a className="navitem" href="/about">
-            About
-          </a>
-        </Sidebar>
-        <Content>{children}</Content>
-      </Layout>
+      <PageContextProvider pageContext={pageContext}>
+        <Layout>
+          <>
+            <Sidebar>
+              <>
+                <a className="navitem" href="/">
+                  Home
+                </a>
+                <a className="navitem" href="/about">
+                  About
+                </a>
+              </>
+            </Sidebar>
+            <Content>{children}</Content>
+          </>
+        </Layout>
+      </PageContextProvider>
     </React.StrictMode>
   );
 }
 
-function Layout({ children }) {
+function Layout({ children }: LayoutProps) {
   return (
     <div
       style={{
@@ -35,7 +50,7 @@ function Layout({ children }) {
   );
 }
 
-function Sidebar({ children }) {
+function Sidebar({ children }: LayoutProps) {
   return (
     <div
       style={{
@@ -53,7 +68,7 @@ function Sidebar({ children }) {
   );
 }
 
-function Content({ children }) {
+function Content({ children }: LayoutProps) {
   return (
     <div
       style={{

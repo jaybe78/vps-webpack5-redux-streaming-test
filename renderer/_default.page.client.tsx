@@ -9,12 +9,14 @@ import { PageContext } from "./types";
 export { render };
 async function render(pageContext: PageContext) {
   const { Page, pageProps } = pageContext;
-  const store = getStore(pageContext.PRELOADED_STATE);
+  console.log("client", pageProps);
+  const store = getStore(pageContext.initialStoreState);
   hydrateRoot(
+    // @ts-ignore
     document.getElementById("page-view"),
     <ReactStreaming>
       <Provider store={store}>
-        <PageLayout>
+        <PageLayout pageContext={pageContext}>
           <Page {...pageProps} />
         </PageLayout>
       </Provider>

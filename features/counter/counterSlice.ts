@@ -1,8 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-type CounterState = {
-  value: number;
-};
+import { CounterState } from "../../renderer/types";
 
 const initialState = { value: 999 } as CounterState;
 
@@ -17,7 +14,6 @@ const counterSlice = createSlice({
       state.value--;
     },
     updateCount(state, action) {
-      console.log("about to update the count");
       state.value = action.payload;
     },
   },
