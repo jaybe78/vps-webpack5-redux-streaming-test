@@ -27,7 +27,7 @@ const config = {
     minimize: false,
     nodeEnv: false,
   },
-  plugins: [],
+  plugins: ["babel-plugin-styled-components"],
 };
 
 export default config;

@@ -26,9 +26,6 @@ async function render(pageContext) {
     }
   );
 
-
-
-console.log('stream', stream)
   return escapeInject`<!DOCTYPE html>
     <html>
       <body>

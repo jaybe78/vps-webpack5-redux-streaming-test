@@ -15,6 +15,7 @@ async function render(pageContext) {
      <Provider store={store}>
     <PageLayout>
       <Page {...pageProps} />
-    </PageLayout></Provider></ReactStreaming>
+    </PageLayout></Provider>
+      </ReactStreaming>
   );
 }
