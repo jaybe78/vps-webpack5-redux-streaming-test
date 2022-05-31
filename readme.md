@@ -96,13 +96,12 @@ async function render(pageContext) {
 ```
 
 
-## What's the proper way of updating `redux` store
-
-I managed to do it but not sure it's the right way to do so
+## What's the proper way of updating `redux` store ?
 
 If we look at `_default.page.server.jsx`, I fetch some data and then dispatch the result to update the state.
 
-What I've noticed is that, in the `render` function, `store.getState()` has not been updated yet so I have to pass the return the new store from `onBeforeRender`.
+What I've noticed is that, after dispatching the action, in the `render` function, `store.getState()` has not been updated yet... so the only "solution" I have found is to return the updated store from `onBeforeRender`.
+
 
 - _default.page.server.jsx
 ```
