@@ -16,7 +16,6 @@ const userSlice = createSlice({
     authenticate(state, action) {
       state.loading = true;
       state.firstname = action.payload.name;
-      console.log("user state", action.payload.name);
     },
     logout(state) {},
   },

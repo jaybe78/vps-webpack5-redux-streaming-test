@@ -12,6 +12,5 @@ export default function Weather() {
     );
     return response.json();
   });
-  console.log(wth?.product);
   return <ul>{wth?.product}</ul>;
 }

@@ -4,7 +4,6 @@ import { usePageContext } from "../../renderer/usePageContext";
 export default (pageContext: PageContext) => {
   const isUserAuthenticated = pageContext.initialStoreState;
   // pageContext does not show updated user
-  console.log("logging route", pageContext);
 
   if (isUserAuthenticated) {
     // console.log('redirect to login', pageContext)
