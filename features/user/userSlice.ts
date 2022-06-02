@@ -35,6 +35,7 @@ export const authenticateUser = createAsyncThunk(
     const response = await fetch("https://api.agify.io/?name=bella");
     const data = await response.json();
     thunkAPI.dispatch(authenticate(data));
+    console.log('update store', data)
   }
 );
 
