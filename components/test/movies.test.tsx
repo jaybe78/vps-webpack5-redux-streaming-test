@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import React from "react";
 import Movies from "../Movies";
 import { useSsrData } from "react-streaming";
@@ -9,8 +9,6 @@ const mockUseSsrData = () => ({ results: [{ director: "michael" }] });
 
 describe("test", () => {
   it("render movies pages", () => {
-    // useSsrData.mockImplementation(() => "Craig");
-    // (useSsrData as jest.Mock).mockImplementation(() => { results: [{ director: 'michael' }] });
     render(<Movies />);
   });
 });
