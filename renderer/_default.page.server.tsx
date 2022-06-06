@@ -2,14 +2,14 @@ import "isomorphic-fetch";
 import React from "react";
 import { escapeInject } from "vite-plugin-ssr";
 import { PageLayout } from "./PageLayout";
-import { renderToStream } from "react-streaming/server";
+import { renderToStream } from "../react-streaming/server";
 export { render };
 import { getStore } from "./store";
 import { Provider } from "react-redux";
 import { PageContext } from "./types";
 import { updateCount } from "../features/counter/counterSlice";
 import { authenticateUser } from "../features/user/userSlice";
-import { StaticRouter } from 'react-router-dom/server'
+import { StaticRouter } from "react-router-dom/server";
 
 export { passToClient };
 export { onBeforeRender };
@@ -32,9 +32,12 @@ async function render(pageContext: PageContext) {
       webStream: false,
     }
   );
-
+  console.log("server");
   return escapeInject`<!DOCTYPE html>
     <html>
+      <head>
+      <title>Bulbshare</title>
+    </head>  
       <body>
         <div id="page-view">${stream}</div>
       </body>

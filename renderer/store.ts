@@ -9,7 +9,7 @@ function getStore(PRELOADED_STATE?: any) {
       counterReducer,
     },
     preloadedState: PRELOADED_STATE,
-    devTools: true,
+    devTools: __ENV__,
   });
 }
 

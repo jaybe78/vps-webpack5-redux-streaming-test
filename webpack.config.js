@@ -30,9 +30,6 @@ const config = {
   },
   plugins: [
     "babel-plugin-styled-components",
-    new webpack.DefinePlugin({
-      __DEV__: true,
-    }),
   ],
 };
 

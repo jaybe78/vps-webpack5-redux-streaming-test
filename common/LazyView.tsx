@@ -1,7 +1,7 @@
 import React, { lazy, ComponentType } from "react";
 
 type LazyProps = {
-  name: string;
+  page: string;
 };
 
 const retry = (
@@ -25,17 +25,20 @@ const retry = (
   });
 };
 
-const LazyComponentDelay = (props: LazyProps) =>
+const LazyPage = (props: LazyProps) =>
   lazy(() =>
     Promise.all([
-      retry(() => import(`../components/${props.name}.tsx`)),
+      retry(() => import(`../pages/${props.page}.tsx`)),
       new Promise((resolve) => setTimeout(resolve, 1000)),
     ]).then(([module]) => module)
   );
 
-const LazyView = (props: LazyProps) => {
-  const View = LazyComponentDelay(props);
-  return <View />;
-};
+export const LazyDelay = (props: LazyProps) =>
+  lazy(() =>
+    Promise.all([
+      retry(() => import(`../pages/${props.page}.tsx`)),
+      new Promise((resolve) => setTimeout(resolve, 1000)),
+    ]).then(([module]) => module)
+  );
 
-export default LazyView;
+export default LazyPage;
