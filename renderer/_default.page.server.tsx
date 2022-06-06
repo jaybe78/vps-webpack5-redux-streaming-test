@@ -2,7 +2,7 @@ import "isomorphic-fetch";
 import React from "react";
 import { escapeInject } from "vite-plugin-ssr";
 import { PageLayout } from "./PageLayout";
-import { renderToStream } from "../react-streaming/server";
+import { renderToStream } from "react-streaming/server";
 export { render };
 import { getStore } from "./store";
 import { Provider } from "react-redux";

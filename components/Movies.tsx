@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useSsrData } from "../react-streaming";
+import { useSsrData } from "react-streaming";
 
 const Title = styled.h1`
   font-size: 1.5em;
@@ -20,7 +20,6 @@ export default function MovieList() {
       );
       return response.json();
     },
-    [toto, test, bl]
   );
 
   return (

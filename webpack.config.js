@@ -1,7 +1,6 @@
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const webpack = require("webpack");
 
 const config = {
   stats: "errors-only",
@@ -28,9 +27,6 @@ const config = {
     minimize: false,
     nodeEnv: false,
   },
-  plugins: [
-    "babel-plugin-styled-components",
-  ],
 };
 
 export default config;

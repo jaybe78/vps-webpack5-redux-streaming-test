@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import Movies from "../Movies";
-import { useSsrData } from "../../react-streaming";
+import { useSsrData } from "react-streaming";
 
-jest.mock("../../react-streaming/useSsrData");
+jest.mock("react-streaming/useSsrData");
 const mockUseSsrData = () => ({ results: [{ director: "michael" }] });
 (useSsrData as jest.Mock).mockImplementation(mockUseSsrData);
 

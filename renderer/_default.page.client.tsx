@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 import { PageLayout } from "./PageLayout";
 import { getStore } from "./store.js";
 import { Provider } from "react-redux";
-import { ReactStreaming } from "../react-streaming/client";
+import { ReactStreaming } from "react-streaming/client";
 import { PageContext } from "./types";
 import { BrowserRouter } from "react-router-dom";
 

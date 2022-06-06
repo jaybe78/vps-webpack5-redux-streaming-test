@@ -1,5 +1,5 @@
 import React from "react";
-import { useAsync, useSsrData } from "../react-streaming";
+import { useAsync, useSsrData } from "react-streaming";
 
 type toto = {
   tt: string;
