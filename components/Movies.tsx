@@ -29,7 +29,7 @@ export default function MovieList() {
         return (
           <li key={`movies${id}`}>
             <Title onClick={() => setToto("2")}>{movie.director}</Title>
-              {import.meta.env.VITE_ENV}
+              {process.env.VITE_ENV}
           </li>
         );
       })}
