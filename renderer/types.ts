@@ -30,6 +30,7 @@ export type PageContext = {
   pageProps: PageProps;
   urlPathname: string;
   initialStoreState?: State;
+  url: string;
   documentProps?: {
     title?: string;
     description?: string;

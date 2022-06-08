@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { PageContext } from "./types";
 import { updateCount } from "../features/counter/counterSlice";
 import { authenticateUser } from "../features/user/userSlice";
+import { StaticRouter } from "react-router-dom/server";
 
 export { passToClient };
 export { onBeforeRender };
@@ -22,18 +23,21 @@ async function render(pageContext: PageContext) {
 
   const stream = await renderToStream(
     <Provider store={store}>
-      <PageLayout pageContext={pageContext}>
+      <StaticRouter location={pageContext.url}>
         <Page {...pageProps} />
-      </PageLayout>
+      </StaticRouter>
     </Provider>,
     {
       disable: false,
       webStream: false,
     }
   );
-
+  console.log("server");
   return escapeInject`<!DOCTYPE html>
     <html>
+      <head>
+      <title>Bulbshare</title>
+    </head>  
       <body>
         <div id="page-view">${stream}</div>
       </body>
@@ -47,14 +51,13 @@ async function onBeforeRender(pageContext: PageContext) {
   );
   const result = await list.json();
   store.dispatch(updateCount(result.numPages));
-  await store.dispatch(authenticateUser());
+  // await store.dispatch(authenticateUser());
 
   // Grab the initial state from our Redux store
   const initialStoreState = store.getState();
   return {
     pageContext: {
       initialStoreState,
-      user: "toto",
       pageProps: {
         toto: "bb",
         user: "toto",
