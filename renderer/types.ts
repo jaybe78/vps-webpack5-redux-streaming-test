@@ -1,5 +1,5 @@
-import { AnyAction, EnhancedStore } from "@reduxjs/toolkit";
-import { ThunkMiddleware } from "redux-thunk";
+// import { AnyAction, EnhancedStore } from "@reduxjs/toolkit";
+// import { ThunkMiddleware } from "redux-thunk";
 
 export type PageProps = {};
 
@@ -19,20 +19,20 @@ export type State = {
   counterReducer: CounterState;
 };
 
-export type Store = EnhancedStore<
-  State,
-  AnyAction,
-  [ThunkMiddleware<State, AnyAction, undefined>]
->;
-// The `pageContext` that are available in both on the server-side and browser-side
-export type PageContext = {
-  Page: (pageProps: PageProps) => React.ReactElement;
-  pageProps: PageProps;
-  urlPathname: string;
-  initialStoreState?: State;
-  url: string;
-  documentProps?: {
-    title?: string;
-    description?: string;
-  };
-};
+// export type Store = EnhancedStore<
+//   State,
+//   AnyAction,
+//   [ThunkMiddleware<State, AnyAction, undefined>]
+// >;
+// // The `pageContext` that are available in both on the server-side and browser-side
+// export type PageContext = {
+//   Page: (pageProps: PageProps) => React.ReactElement;
+//   pageProps: PageProps;
+//   urlPathname: string;
+//   initialStoreState?: State;
+//   url: string;
+//   documentProps?: {
+//     title?: string;
+//     description?: string;
+//   };
+// };
