@@ -1,7 +1,10 @@
 // import { AnyAction, EnhancedStore } from "@reduxjs/toolkit";
 // import { ThunkMiddleware } from "redux-thunk";
 
-export type PageProps = {};
+export type PageProps = {
+  translations: Record<string, string>;
+  currentLocale: string;
+};
 
 export type CounterState = {
   value: number;

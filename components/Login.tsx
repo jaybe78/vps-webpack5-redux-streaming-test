@@ -11,14 +11,8 @@ export default function Login() {
   return (
     <>
       <form>
-
         <CustomInput labelId={"email"} labelText={"Email"} />
-        <Button
-
-          type="button"
-          color="primary"
-          className="form__custom-button"
-        >
+        <Button type="button" color="primary" className="form__custom-button">
           Log in
         </Button>
       </form>

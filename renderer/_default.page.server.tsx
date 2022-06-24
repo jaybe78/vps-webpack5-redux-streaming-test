@@ -1,4 +1,3 @@
-
 import React from "react";
 import { escapeInject } from "vite-plugin-ssr";
 import { PageLayout } from "./PageLayout";
@@ -22,9 +21,9 @@ async function render(pageContext) {
   // const store = getStore(pageContext.initialStoreState);
 
   const stream = await renderToStream(
-      <StaticRouter location={pageContext.url}>
-        <Page {...pageProps} />
-      </StaticRouter>,
+    <StaticRouter location={pageContext.url}>
+      <Page {...pageProps} />
+    </StaticRouter>,
     {
       disable: false,
       webStream: false,
@@ -43,23 +42,12 @@ async function render(pageContext) {
 }
 
 async function onBeforeRender(pageContext) {
-  // const store = getStore(pageContext.initialStoreState);
-  const list = await fetch(
-    "https://xeno-canto.org/api/2/recordings?query=cnt:brazil"
-  );
-  const result = await list.json();
-  // store.dispatch(updateCount(result.numPages));
-  // await store.dispatch(authenticateUser());
-
-  // Grab the initial state from our Redux store
-  // const initialStoreState = store.getState();
+  const translations = await import("../locales/en.json");
   return {
     pageContext: {
-      // initialStoreState,
       pageProps: {
-        toto: "bb",
-        user: "toto",
-        loggedIn: true,
+        translations,
+        currentLocale: "en",
       },
     },
   };

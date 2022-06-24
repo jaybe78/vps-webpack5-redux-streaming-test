@@ -1,30 +1,24 @@
-
 import React, { useEffect, useState } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import LazyPage from "../common/LazyView";
+import { IntlProvider } from "react-intl";
+import { PageProps } from "../renderer/types";
 
 export { Page };
 
 const LazyHome = LazyPage({ page: "Home" });
 const LazyAbout = LazyPage({ page: "About" });
-function Page() {
+function Page({ translations, currentLocale }: PageProps) {
+  const [lang, setLang] = useState<string>("en");
+  const [messages, setMessages] = useState(translations);
+
   return (
-    <>
-      <b>
-        <i>
-          Time elapsed: <TimeElapsed />
-        </i>
-        <Counter />
-      </b>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/about">About</Link>
-        </li>
-      </ul>
-      <hr />
+    <IntlProvider
+      key={lang}
+      messages={messages}
+      locale={lang}
+      defaultLocale={currentLocale}
+    >
       <React.Suspense
         fallback={<span className="no-result-search">Loading...</span>}
       >
@@ -33,32 +27,6 @@ function Page() {
           <Route path="/about" element={<LazyAbout />} />
         </Routes>
       </React.Suspense>
-    </>
-  );
-}
-
-function TimeElapsed() {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    const timeout = setInterval(() => {
-      setCount((c) => c + 1);
-    }, 1000);
-    return () => clearTimeout(timeout);
-  }, []);
-
-  return <>{count}</>;
-}
-
-function Counter() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <button
-      onClick={() => setCount((count) => count + 1)}
-      style={{ marginLeft: 10 }}
-    >
-      Count: <span>{count}</span>
-    </button>
+    </IntlProvider>
   );
 }

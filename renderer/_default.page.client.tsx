@@ -16,10 +16,11 @@ async function render(pageContext) {
   const container = document.getElementById("page-view")!;
   const page = (
     // @ts-ignore
-       <ReactStreaming>
-        <BrowserRouter>
-          <Page {...pageProps} />
-        </BrowserRouter></ReactStreaming>
+    <ReactStreaming>
+      <BrowserRouter>
+        <Page {...pageProps} />
+      </BrowserRouter>
+    </ReactStreaming>
   );
   hydrateRoot(container, page);
 }
