@@ -1,9 +1,14 @@
 import React from "react";
-import Code from "../components/Code";
 import { useIntl } from "react-intl";
+import {useSsrData} from "react-streaming";
 
 export default function Home() {
-  const LazyMovies = React.lazy(() => import("./../components/Movies"));
+  const movies = useSsrData("movies", async () => {
+    const response = await fetch(
+      "https://star-wars.brillout.com/api/films.json"
+    );
+    return response.json();
+  });
   const intl = useIntl();
   return (
     <div>
@@ -11,9 +16,6 @@ export default function Home() {
         id: "app_name",
         defaultMessage: "app_name",
       })}
-      <React.Suspense fallback={<p>I'm lazy loaded...</p>}>
-        <LazyMovies />
-      </React.Suspense>
     </div>
   );
 }

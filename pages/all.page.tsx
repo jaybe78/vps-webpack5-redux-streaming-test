@@ -3,11 +3,11 @@ import { Link, Route, Routes } from "react-router-dom";
 import LazyPage from "../common/LazyView";
 import { IntlProvider } from "react-intl";
 import { PageProps } from "../renderer/types";
+import Home from "./Home";
 
 export { Page };
 
 const LazyHome = LazyPage({ page: "Home" });
-const LazyAbout = LazyPage({ page: "About" });
 function Page({ translations, currentLocale }: PageProps) {
   const [lang, setLang] = useState<string>("en");
   const [messages, setMessages] = useState(translations);
@@ -24,7 +24,6 @@ function Page({ translations, currentLocale }: PageProps) {
       >
         <Routes>
           <Route path="/" element={<LazyHome />} />
-          <Route path="/about" element={<LazyAbout />} />
         </Routes>
       </React.Suspense>
     </IntlProvider>
