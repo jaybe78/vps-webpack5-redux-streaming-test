@@ -6,7 +6,7 @@ import { defineConfig } from "vite";
 export default defineConfig(({ command, mode }) => {
   return {
     plugins: [react(), ssr({
-      disableBuildChaining: true,
+      //disableBuildChaining: true,
     }), EnvironmentPlugin("all")],
     define: {
       __ENV__: mode === "development" ? true : false,
