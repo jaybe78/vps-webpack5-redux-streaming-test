@@ -9,7 +9,7 @@ export default function Home() {
     );
     return response.json();
   });
-  const LazyMovies = React.lazy(() => import("./../components/Movies"));
+  // const LazyMovies = React.lazy(() => import("./../components/Movies"));
   const intl = useIntl();
   console.log(movies)
   return (
