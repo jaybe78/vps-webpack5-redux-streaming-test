@@ -5,6 +5,7 @@ import { IntlProvider } from "react-intl";
 import { PageProps } from "../renderer/types";
 import Home from "./Home";
 import About from "./About";
+import SuspenseTest from "./About";
 
 export { Page };
 
@@ -21,17 +22,19 @@ function Page({ translations, currentLocale }: PageProps) {
       locale={lang}
       defaultLocale={currentLocale}
     >
-
+<React.Suspense
+        fallback={<span className="no-result-search">Loading...</span>}>
         <Routes>
+                
           <Route path="/" element={
-               <React.Suspense
-        fallback={<span className="no-result-search">Loading...</span>}
-      >
-              <Home />
-               </React.Suspense>
+           
+      
+              <SuspenseTest />
                    } />
+             
              <Route path="about" element={<About />} />
         </Routes>
+     </React.Suspense>
     </IntlProvider>
   );
 }

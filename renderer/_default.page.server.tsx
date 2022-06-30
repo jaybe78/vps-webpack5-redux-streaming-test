@@ -1,19 +1,13 @@
 import React from "react";
 import { escapeInject } from "vite-plugin-ssr";
-import { PageLayout } from "./PageLayout";
 export { render };
-// import { getStore } from "./store";
-// import { Provider } from "react-redux";
-// import { PageContext } from "./types";
-import { renderToStream } from "react-streaming/server";
-import { updateCount } from "../features/counter/counterSlice";
-import { authenticateUser } from "../features/user/userSlice";
+import { renderToStream } from "../react-streaming/server";
 import { StaticRouter } from "react-router-dom/server";
 
 export { passToClient };
 export { onBeforeRender };
 
-// See https://vite-plugin-ssr.com/data-fetching
+
 const passToClient = ["pageProps", "initialStoreState"];
 
 async function render(pageContext) {
@@ -29,7 +23,6 @@ async function render(pageContext) {
       webStream: false,
     }
   );
-  console.log("server");
   return escapeInject`<!DOCTYPE html>
     <html>
       <head>
