@@ -17,43 +17,28 @@ const later = (delay: number, value: number) =>
   new Promise((resolve) => setTimeout(resolve, delay, value));
 
 const DELAY_SUSPENSE_1 = 2000;
-const DELAY_SUSPENSE_2 = 10000;
+const DELAY_SUSPENSE_2 = 5000;
 
-const InnerSuspense = () => {
-  const [deps, setDeps] = useState<number>(1);
+const InnerSuspense = ({ id, name, delay, deps }) => {
 
-  const suspense1: string = useSsrData(
-    "suspense1",
+  const suspense: string = useSsrData(
+      id,
     async () => {
-      return later(DELAY_SUSPENSE_1, value[deps]);
+      return later(delay, value[deps]);
     },
     [deps]
   );
   return (
     <>
-      <h1>Suspense 1: {suspense1}</h1>
-      <input type="number" onChange={(event) => setDeps(event.target.value)} />
+      <h1>{name}: {suspense}</h1>
     </>
   );
 };
 
-const InnerSuspense2 = ({ deps }) => {
-  const suspense2: string = useSsrData(
-    "suspense2",
-    async () => {
-      return later(DELAY_SUSPENSE_2, value[deps]);
-    },
-    [deps]
-  );
-  return (
-    <>
-      <h1>Suspense 2: {suspense2}</h1>
-    </>
-  );
-};
 
 export default function SuspenseTest() {
-  const [deps, setDeps] = useState<number>(4);
+  const [depsSuspense1, setDeps] = useState<number>(1);
+  const [depsSuspense2, setDepsSuspense2] = useState<number>(4);
 
   return (
     <>
@@ -61,19 +46,19 @@ export default function SuspenseTest() {
       <React.Suspense
         fallback={<div style={{ color: "red" }}>fetch inner suspense 1 during {DELAY_SUSPENSE_1}ms ...</div>}
       >
-        <InnerSuspense />
+        <InnerSuspense id="suspense1" name="Suspense 1" delay={DELAY_SUSPENSE_1} deps={depsSuspense1} />
       </React.Suspense>
 
 
       <React.Suspense
         fallback={<div style={{ color: "red" }}>fetch inner 2 suspense during {DELAY_SUSPENSE_2} ms...</div>}
       >
-        <InnerSuspense2 deps={deps} />
+        <InnerSuspense id="suspense2" name="Suspense 2" delay={DELAY_SUSPENSE_2} deps={depsSuspense2} />
       </React.Suspense>
 
       <div style={{ marginTop: "20px" }}>
          Update deps for suspense 2:
-        <input type="number" onChange={(event) => setDeps(event.target.value)} />
+        <input type="number" onChange={(event) => setDepsSuspense2(event.target.value)} />
       </div>
 
     </>
