@@ -1,7 +1,5 @@
 import { hydrateRoot } from "react-dom/client";
 import React from "react";
-import ReactDOM from "react-dom/client";
-import { PageLayout } from "./PageLayout";
 import { getStore } from "./store.js";
 import { Provider } from "react-redux";
 import { ReactStreaming } from "react-streaming/client";

@@ -46,12 +46,8 @@ async function render(pageContext: PageContext) {
 
 async function onBeforeRender(pageContext: PageContext) {
   const store = getStore(pageContext.initialStoreState);
-  const list = await fetch(
-    "https://xeno-canto.org/api/2/recordings?query=cnt:brazil"
-  );
-  const result = await list.json();
-  store.dispatch(updateCount(result.numPages));
-  // await store.dispatch(authenticateUser());
+
+  const About = await import('../pages/About')
 
   // Grab the initial state from our Redux store
   const initialStoreState = store.getState();
@@ -59,9 +55,7 @@ async function onBeforeRender(pageContext: PageContext) {
     pageContext: {
       initialStoreState,
       pageProps: {
-        toto: "bb",
-        user: "toto",
-        loggedIn: true,
+
       },
     },
   };
