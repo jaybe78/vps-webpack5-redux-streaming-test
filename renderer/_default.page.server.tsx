@@ -49,6 +49,8 @@ async function onBeforeRender(pageContext: PageContext) {
 
   const About = await import('../pages/About')
 
+  // call init data present in About component
+
   // Grab the initial state from our Redux store
   const initialStoreState = store.getState();
   return {
